@@ -9,6 +9,8 @@ import {
 
 import { connect } from 'react-redux';
 
+import CardComponent from '../components/CardComponent';
+
 class HomeScreen extends React.Component {
     static navigationOptions = {
       headerTitle: 'Home',
@@ -26,6 +28,8 @@ class HomeScreen extends React.Component {
         <View style={styles.container}>
 
            <Text> We have { this.props.nb_post.current.length } nb_post!</Text>
+           <CardComponent photo={require("../assets/images/icon.png")} thumbnail={require("../assets/images/robot-dev.png")} lastName="Last" firstName="First" date="01/01/2018" likes="10" nb_commentaires="3" description="dsq HEIN"/>
+
 
          </View>
     );
