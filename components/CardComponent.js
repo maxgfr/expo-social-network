@@ -35,21 +35,18 @@ class CardComponent extends Component {
                             <Icon name="ios-heart-outline" style={{ color: 'black' }} />
                             <Text> {this.props.likes}</Text>
                         </Button>
-                        <Button transparent>
-                            <Icon name="ios-chatbubbles-outline" style={{ color: 'black' }} />
-                            <Text> {this.props.nb_commentaires}</Text>
-                        </Button>
                     </Left>
                     <Right>
                         <Button transparent>
-                            <Icon name="ios-send-outline" style={{ color: 'black' }} />
+                            <Icon name="ios-chatbubbles-outline" style={{ color: 'black' }} />
+                            <Text> {this.props.nb_commentaires}</Text>
                         </Button>
                     </Right>
                 </CardItem>
                 <CardItem>
                     <Body>
                         <Text>
-                            <Text style={{ fontWeight: "900" }}>{this.props.pseudo} </Text>
+                            <Text style={{ fontWeight: "900" }}>{this.props.lastName} {this.props.firstName} </Text>
                             {this.props.description}
                         </Text>
                     </Body>

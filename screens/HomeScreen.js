@@ -5,30 +5,36 @@ import {
   Text,
   View,
   Button,
+  TouchableOpacity
 } from 'react-native';
 
 import { connect } from 'react-redux';
 
 import CardComponent from '../components/CardComponent';
 
+import { Icon, Content } from 'native-base'
+
 class HomeScreen extends React.Component {
+
+    onPressButton(){
+        console.log("lol");
+     }
     static navigationOptions = {
       headerTitle: 'Home',
       headerRight: (
-        <Button
-          onPress={() => alert('This is a button!')}
-          title="Info"
-          color="#aaa"
-        />
+        <TouchableOpacity onPress={this.onPressButton}>
+            <Icon name="ios-add-outline" style={{ color: 'black', right: '100%'}} />
+        </TouchableOpacity>
       )
     };
+
+
 
   render() {
     return (
         <View style={styles.container}>
 
-           <Text> We have { this.props.nb_post.current.length } nb_post!</Text>
-           <CardComponent photo={require("../assets/images/icon.png")} thumbnail={require("../assets/images/robot-dev.png")} lastName="Last" firstName="First" date="01/01/2018" likes="10" nb_commentaires="3" description="dsq HEIN"/>
+           <CardComponent photo={require("../assets/images/icon.png")} thumbnail={require("../assets/images/robot-dev.png")} lastName="Last" firstName="First" date="01/01/2018" likes={ this.props.nb_post.current.length } nb_commentaires="3" description="dsq HEIN"/>
 
 
          </View>
