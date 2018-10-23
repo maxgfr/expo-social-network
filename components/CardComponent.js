@@ -22,6 +22,11 @@ class CardComponent extends Component {
                             <Text note>{this.props.date}</Text>
                         </Body>
                     </Left>
+                    <Right>
+                        <Button transparent>
+                            <Icon name="ios-more-outline" style={{ color: 'black' }} />
+                        </Button>
+                    </Right>
                 </CardItem>
                 <CardItem cardBody>
                     <Image
@@ -29,17 +34,22 @@ class CardComponent extends Component {
                       style={{ height: 200, width: null, flex: 1 }}
                     />
                 </CardItem>
-                <CardItem style={{ height: 30 }}>
+                <CardItem>
                     <Left>
                         <Button transparent>
                             <Icon name="ios-heart-outline" style={{ color: 'black' }} />
-                            <Text> {this.props.likes}</Text>
+                            <Text> {this.props.likes} likes</Text>
                         </Button>
                     </Left>
-                    <Right>
+                    <Body>
                         <Button transparent>
                             <Icon name="ios-chatbubbles-outline" style={{ color: 'black' }} />
-                            <Text> {this.props.nb_commentaires}</Text>
+                            <Text> {this.props.nb_commentaires} comments</Text>
+                        </Button>
+                    </Body>
+                    <Right>
+                        <Button transparent>
+                            <Icon name="ios-send-outline" style={{ color: 'black' }} />
                         </Button>
                     </Right>
                 </CardItem>
