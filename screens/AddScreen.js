@@ -12,13 +12,79 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addPost } from '../actions/PostActions';
 
+import { Field,reduxForm } from 'redux-form';
+
+const validate = values => {
+  const error= {};
+  error.email= '';
+  error.name= '';
+  var ema = values.email;
+  var nm = values.name;
+  if(values.email === undefined){
+    ema = '';
+  }
+  if(values.name === undefined){
+    nm = '';
+  }
+  if(ema.length < 8 && ema !== ''){
+    error.email= 'too short';
+  }
+  if(!ema.includes('@') && ema !== ''){
+    error.email= '@ not included';
+  }
+  if(nm.length > 8){
+    error.name= 'max 8 characters';
+  }
+  return error;
+};
+
 class AddScreen extends React.Component {
 
 
     static navigationOptions = {
       headerTitle: 'Add',
 
-    };
+  };
+
+  constructor(props){
+    super(props);
+    this.renderInput = this.renderInput.bind(this);
+    this.renderTextAreaLocation = this.renderTextAreaLocation.bind(this);
+    this.renderTextAreaNormal = this.renderTextAreaNormal.bind(this);
+  }
+
+    renderInput({ input, label, type, meta: { touched, error, warning } }){
+      var hasError= false;
+      if(error !== undefined){
+        hasError= true;
+      }
+      return(
+        <Item error= {hasError}>
+          <Input {...input}  placeholder="Titre" />
+          {hasError ? <Text>{error}</Text> : <Text />}
+        </Item>
+      )
+    }
+
+    renderTextAreaLocation({ input, label, type, meta: { touched, error, warning } }){
+      var hasError= false;
+      if(error !== undefined){
+        hasError= true;
+      }
+      return(
+         <Textarea rowSpan={1} style={{fontWeight:"bold"}} placeholder="Location" {...input} />
+      )
+    }
+
+    renderTextAreaNormal({ input, label, type, meta: { touched, error, warning } }){
+      var hasError= false;
+      if(error !== undefined){
+        hasError= true;
+      }
+      return(
+         <Textarea rowSpan={5} placeholder="Blabla" {...input} />
+      )
+    }
 
   render() {
     return (
@@ -52,16 +118,16 @@ class AddScreen extends React.Component {
 
                    <CardItem cardBody>
                        <InputGroup style={{ borderColor: 'transparent'}} >
-                           <Input  placeholder='Titre' />
+                           <Field name="email" component={this.renderInput} />
                        </InputGroup>
                    </CardItem>
 
                    <CardItem cardBody>
-                       <Textarea rowSpan={5} placeholder="Blabla bla" />
+                       <Field name="email" component={this.renderTextAreaNormal} />
                    </CardItem>
 
                    <CardItem>
-                       <Textarea rowSpan={1} style={{fontWeight:"bold"}} placeholder="Location" />
+                      <Field name="email" component={this.renderTextAreaLocation} />
                    </CardItem>
 
                    <CardItem>
@@ -84,7 +150,7 @@ class AddScreen extends React.Component {
                </Card>
 
                 <Content style={{  marginTop: 10, marginLeft: 30, marginRight: 30}}>
-                   <Button full rounded style={{ backgroundColor: "#7D9FDD" }} onPress={() => this.props.addPost('item')}>
+                   <Button full rounded style={{ backgroundColor: "#7D9FDD" }} onPress={() => this.props.addPost(item)}>
                         <Text style={{ color: "white" }}>Publish</Text>
                    </Button>
                 </Content>
@@ -105,9 +171,22 @@ const styles = StyleSheet.create({
   }
 });
 
+
 const mapStateToProps = (state) => {
-  const { nb_post } = state
-  return { nb_post }
+  const { myState } = state
+  return { myState }
 };
 
-export default connect(mapStateToProps)(AddScreen);
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    addPost,
+  }, dispatch)
+);
+
+
+AddScreen = connect(mapStateToProps, mapDispatchToProps)(AddScreen);
+
+export default reduxForm({
+  form: 'test',
+  validate
+})(AddScreen)

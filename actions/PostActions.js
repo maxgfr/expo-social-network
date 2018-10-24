@@ -1,6 +1,14 @@
-export const addPost = postIndex => (
+export const addPost = post => (
   {
     type: 'ADD_POST',
-    payload: postIndex,
+    id: post.id,
+    payload: post
+  }
+);
+
+export const delPost = postId => (
+  {
+    type: 'REMOVE_POST',
+    id: postId,
   }
 );
