@@ -3,7 +3,7 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View,
+  ScrollView,
   Button,
   TouchableOpacity
 } from 'react-native';
@@ -28,14 +28,15 @@ class HomeScreen extends React.Component {
 
 
 
+
   render() {
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
+            {this.props.data.byId.map((item, index) => (
+                <CardComponent photo={this.props.data.byHash[item].content.photo} thumbnail={this.props.data.byHash[item].content.thumbnail} lastName={this.props.data.byHash[item].content.lastName} firstName={this.props.data.byHash[item].content.firstName} date={this.props.data.byHash[item].content.date} likes={this.props.data.byHash[item].content.likes} nb_commentaires={this.props.data.byHash[item].content.nb_commentaires} description={this.props.data.byHash[item].content.description} />
+            ))}
 
-           <CardComponent photo={require("../assets/images/icon.png")} thumbnail={require("../assets/images/robot-dev.png")} lastName="Last" firstName="First" date="01/01/2018" likes={ this.props.nb_post.current.length } nb_commentaires="3" description="dsq HEIN"/>
-
-
-         </View>
+         </ScrollView>
     );
   }
 
@@ -49,8 +50,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const { nb_post } = state
-  return { nb_post }
+  const { data } = state
+  return { data }
 };
 
 export default connect(mapStateToProps)(HomeScreen);

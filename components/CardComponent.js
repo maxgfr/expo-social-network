@@ -16,7 +16,7 @@ class CardComponent extends Component {
             <Card>
                 <CardItem>
                     <Left>
-                        <Thumbnail source={this.props.thumbnail} />
+                        <Thumbnail source={{ uri: this.props.thumbnail }} />
                         <Body>
                             <Text style={{ fontWeight: "900" }}>{this.props.lastName} {this.props.firstName}</Text>
                             <Text note>{this.props.date}</Text>
@@ -30,7 +30,7 @@ class CardComponent extends Component {
                 </CardItem>
                 <CardItem cardBody>
                     <Image
-                      source={this.props.photo}
+                      source={{ uri: this.props.photo }}
                       style={{ height: 200, width: null, flex: 1 }}
                     />
                 </CardItem>
