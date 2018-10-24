@@ -187,6 +187,6 @@ const mapDispatchToProps = dispatch => (
 AddScreen = connect(mapStateToProps, mapDispatchToProps)(AddScreen);
 
 export default reduxForm({
-  form: 'test',
+  form: 'addScreen',
   validate
 })(AddScreen)
