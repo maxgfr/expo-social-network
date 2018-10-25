@@ -41,26 +41,49 @@ const validate = values => {
 class AddScreen extends React.Component {
 
 
-    static navigationOptions = {
+  static navigationOptions = {
       headerTitle: 'Add',
-
   };
 
   constructor(props){
     super(props);
+    this.state = {
+      username: 'reactnative@infinite.red',
+      password: 'password',
+    }
+    this.isAttempting = false;
     this.renderInput = this.renderInput.bind(this);
     this.renderTextAreaLocation = this.renderTextAreaLocation.bind(this);
     this.renderTextAreaNormal = this.renderTextAreaNormal.bind(this);
   }
 
+  handlePressLogin = () => {
+  const { username, password } = this.state
+  this.isAttempting = true
+  // attempt a login - a saga is listening to pick it up from here.
+  console.log(password);
+  this.props.attemptLogin(username, password)
+}
+
+handleChangeUsername = (text) => {
+  this.setState({ username: text })
+}
+
+handleChangePassword = (text) => {
+  this.setState({ password: text })
+}
+
     renderInput({ input, label, type, meta: { touched, error, warning } }){
+        const { username, password } = this.state;
+        const { fetching } = this.props;
+        const editable = !fetching;
       var hasError= false;
       if(error !== undefined){
         hasError= true;
       }
       return(
         <Item error= {hasError}>
-          <Input {...input}  placeholder="Titre" />
+          <Input {...input}  value={password} editable={editable} onChangeText={this.handleChangePassword} onSubmitEditing={this.handlePressLogin} placeholder="Titre" />
           {hasError ? <Text>{error}</Text> : <Text />}
         </Item>
       )
@@ -87,6 +110,9 @@ class AddScreen extends React.Component {
     }
 
   render() {
+      const { username, password } = this.state;
+      const { fetching } = this.props;
+      const editable = !fetching;
     return (
         <View style={styles.container}>
 
@@ -150,7 +176,7 @@ class AddScreen extends React.Component {
                </Card>
 
                 <Content style={{  marginTop: 10, marginLeft: 30, marginRight: 30}}>
-                   <Button full rounded style={{ backgroundColor: "#7D9FDD" }} onPress={() => this.props.addPost(item)}>
+                   <Button full rounded style={{ backgroundColor: "#7D9FDD" }} onPress={this.handlePressLogin}>
                         <Text style={{ color: "white" }}>Publish</Text>
                    </Button>
                 </Content>
@@ -182,6 +208,9 @@ const mapDispatchToProps = dispatch => (
     addPost,
   }, dispatch)
 );
+
+
+
 
 
 AddScreen = connect(mapStateToProps, mapDispatchToProps)(AddScreen);
