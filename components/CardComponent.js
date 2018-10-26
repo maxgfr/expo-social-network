@@ -42,7 +42,10 @@ class CardComponent extends Component {
                                   },
                                   buttonIndex => {
                                       console.log(BUTTONS[buttonIndex], this.props.id);
-                                      this.props.delPost(this.props.id);
+                                      if (buttonIndex == 3) { //DELETE OPTION
+                                          this.props.delPost(this.props.id);
+                                      }
+
                                   }
                                 )}>
                                 <Icon name="ios-more-outline" style={{ color: 'black' }}/>

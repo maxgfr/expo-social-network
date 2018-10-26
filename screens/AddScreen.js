@@ -106,6 +106,8 @@ class AddScreen extends React.Component {
 
             console.log(result);
 
+            this.state.formValid = true;
+
             if (!result.cancelled) {
                 this.setState({ image: result.uri });
             }
@@ -144,12 +146,11 @@ class AddScreen extends React.Component {
     render() {
         let { image } = this.state;
         return (
-            <ScrollView style={styles.container}>
+            <Container>
 
+                <ScrollView style={styles.container}>
 
-                <Container>
-
-                    <Content style={{ alignSelf: "center" , marginTop: 20, marginBottom: null}}>
+                    <Content style={{ alignSelf: "center" , marginTop: 20, marginBottom: 30}}>
                         <Icon style={{ alignSelf: "center" }} name='brush' />
                         <Text style={{ fontWeight: "600" , fontSize: 18}}>
                         What is on your mind ?
@@ -196,15 +197,21 @@ class AddScreen extends React.Component {
                     </Card>
 
                     <Content style={{  marginTop: 10, marginLeft: 30, marginRight: 30}}>
-                        <Button  disabled={!this.props.formValid} full rounded style={{ backgroundColor: "#7D9FDD" }} onPress={this.handlePressSubmit}>
-                            <Text style={{ color: "white" }}>Publish</Text>
-                        </Button>
+                    {this.state.formValid
+                        ?   <Button  disabled={!this.state.formValid} full rounded style={{ backgroundColor: "#7D9FDD" }} onPress={this.handlePressSubmit}>
+                                <Text style={{ color: "white" }}>Publish</Text>
+                            </Button>
+                        :   <Button  disabled={!this.state.formValid} full rounded style={{ backgroundColor: "#D3D3D3" }} onPress={this.handlePressSubmit}>
+                                <Text style={{ color: "white" }}>Publish</Text>
+                            </Button>
+                    }
                     </Content>
 
+                </ScrollView>
 
-                </Container>
+            </Container>
 
-            </ScrollView>
+
         );
     }
 
