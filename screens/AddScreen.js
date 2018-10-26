@@ -27,6 +27,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Field, reduxForm } from 'redux-form';
 import { addPost } from '../actions/PostActions';
+import moment from 'moment';
 
 const validate = values => {
     const error= {};
@@ -80,7 +81,7 @@ class AddScreen extends React.Component {
         this.isAttempting = true;
         console.log('Title : ',title);
         console.log('Description : ',description);
-        var item = {id: Date.now(), type:'post_writing', content: {photo: image, thumbnail: thumbnail, username: username, date: new Date().toLocaleString(), likes: '0', nb_commentaires: '0', description: description}};
+        var item = {id: Date.now(), type:'post_writing', content: {photo: image, thumbnail: thumbnail, username: username, date: moment().format('MMMM Do YYYY @ h:mm:ss a'), likes: '0', nb_commentaires: '0', description: description}};
         this.props.addPost(item);
         this.props.navigation.goBack();
     }
