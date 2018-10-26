@@ -17,7 +17,7 @@ import { Icon, Content } from 'native-base'
 class HomeScreen extends React.Component {
 
     static navigationOptions = ({ navigation }) => ({
-        title: "My Profile!",
+        title: "Feed",
         headerRight: (
             <TouchableOpacity onPress={()=>{ navigation.navigate('AddScreen'); }}>
                 <Icon name="ios-add-outline" style={{ color: 'black', right: '100%'}} />
@@ -33,7 +33,7 @@ class HomeScreen extends React.Component {
     return (
         <ScrollView style={styles.container}>
             {this.props.data.byId.map((item, index) => (
-                <CardComponent key={index} photo={this.props.data.byHash[item].content.photo} thumbnail={this.props.data.byHash[item].content.thumbnail} lastName={this.props.data.byHash[item].content.lastName} firstName={this.props.data.byHash[item].content.firstName} date={this.props.data.byHash[item].content.date} likes={this.props.data.byHash[item].content.likes} nb_commentaires={this.props.data.byHash[item].content.nb_commentaires} description={this.props.data.byHash[item].content.description} />
+                <CardComponent key={index} id={this.props.data.byHash[item].id} photo={this.props.data.byHash[item].content.photo} thumbnail={this.props.data.byHash[item].content.thumbnail} username={this.props.data.byHash[item].content.username} date={this.props.data.byHash[item].content.date} likes={this.props.data.byHash[item].content.likes} nb_commentaires={this.props.data.byHash[item].content.nb_commentaires} description={this.props.data.byHash[item].content.description} />
             ))}
 
          </ScrollView>
