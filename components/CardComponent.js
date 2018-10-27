@@ -3,20 +3,42 @@ import {
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
+    TouchableWithoutFeedback
 } from "react-native";
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { delPost } from '../actions/PostActions';
 
-import { Card, CardItem, Thumbnail, Body, Left, Right, Button, Icon, Root, ActionSheet } from 'native-base'
+import { Card, CardItem, Thumbnail, Body, Left, Right, Button, Icon, Root, ActionSheet, Content } from 'native-base'
 
 var BUTTONS = ["Option 0", "Option 1", "Option 2", "Delete", "Cancel"];
 var DESTRUCTIVE_INDEX = 3;
 var CANCEL_INDEX = 4;
 
 class CardComponent extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            pressed_like: false,
+            pressed_com: false,
+            pressed_send: false
+        };
+    }
+
+    likeButton = () => {
+        this.setState({ pressed_like: !this.state.pressed_like });
+    }
+
+    commentButton = () => {
+         this.setState({ pressed_com: !this.state.pressed_com });
+    }
+
+    shareButton = () =>  {
+        this.setState({ pressed_send: !this.state.pressed_send });
+    }
 
     render() {
 
@@ -60,20 +82,20 @@ class CardComponent extends Component {
                     </CardItem>
                     <CardItem>
                         <Left>
-                            <Button transparent>
-                                <Icon name="ios-heart-outline" style={{ color: 'black' }} />
+                            <Button transparent onPress={this.likeButton}>
+                                { this.state.pressed_like ? <Icon name="ios-heart" style={{ color: 'red'}} /> : <Icon name="ios-heart-outline" style={{ color: 'black' }} />}
                                 <Text> {this.props.likes} likes</Text>
                             </Button>
                         </Left>
                         <Body>
-                            <Button transparent>
-                                <Icon name="ios-chatbubbles-outline" style={{ color: 'black' }} />
+                            <Button transparent onPress={this.commentButton}>
+                                { this.state.pressed_com ? <Icon name="ios-chatbubbles" style={{ color: '#9FA6DF'}} /> : <Icon name="ios-chatbubbles-outline" style={{ color: 'black' }} />}
                                 <Text> {this.props.nb_commentaires} comments</Text>
                             </Button>
                         </Body>
                         <Right>
-                            <Button transparent>
-                                <Icon name="ios-send-outline" style={{ color: 'black' }} />
+                            <Button transparent onPress={this.shareButton}>
+                                { this.state.pressed_send ? <Icon name="ios-send" style={{ color: '#9FA6DF'}} /> : <Icon name="ios-send-outline" style={{ color: 'black' }} />}
                             </Button>
                         </Right>
                     </CardItem>
