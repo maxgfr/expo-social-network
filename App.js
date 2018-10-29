@@ -3,10 +3,12 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import globalReducer from './reducers/GlobalReducer';
+import thunk from 'redux-thunk'
 
-const store = createStore(globalReducer);
+const middleware = applyMiddleware(thunk);
+const store = createStore(globalReducer, middleware);
 
 export default class App extends React.Component {
   state = {
