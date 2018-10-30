@@ -1,10 +1,12 @@
-export const addPostRequest = () => (
+import Firebase from '../lib/firebase';
+
+const addPostRequest = () => (
     {
         type: 'ADD_POST_REQUEST'
     }
 );
 
-export const addPostSuccess = post => (
+const addPostSuccess = post => (
     {
         type: 'ADD_POST_SUCCESS',
         id: post.id,
@@ -12,58 +14,99 @@ export const addPostSuccess = post => (
     }
 );
 
-export const addPostFailure = error => (
+const addPostFailure = error => (
     {
         type: 'ADD_POST_FAILURE',
         payload: error
     }
 );
 
-export const delPostRequest = () => (
+const delPostRequest = () => (
     {
         type: 'REMOVE_POST_REQUEST'
     }
 );
 
-export const delPostSuccess = postId => (
+const delPostSuccess = postId => (
     {
         type: 'REMOVE_POST_SUCCESS',
         id: postId,
     }
 );
 
-export const delPostFailure = error => (
+const delPostFailure = error => (
     {
         type: 'REMOVE_POST_FAILURE',
         payload: error,
     }
 );
 
+const getPostRequest = () => (
+    {
+        type: 'GET_POST_REQUEST'
+    }
+);
+
+const getPostSuccess = posts => (
+    {
+        type: 'GET_POST_SUCCESS',
+        payload: posts,
+    }
+);
+
+const getPostFailure = error => (
+    {
+        type: 'GET_POST_FAILURE',
+        payload: error,
+    }
+);
+
+
+export const getPost = () => {
+    return dispatch => {
+        dispatch(getPostRequest());
+        let firebase = Firebase.getInstance();
+        firebase.getPost()
+            .then((data) => {
+              console.log(data);
+              dispatch(getPostSuccess(data.data));
+            })
+            .catch((error) => {
+              console.log(error);
+              dispatch(getPostFailure(error));
+            });
+    };
+};
+
 
 export const addPost = (item) => {
     return dispatch => {
         dispatch(addPostRequest());
-        try {
-            let response = await fetch('')
-            let json = await response.json();
-            dispatch(addPostSuccess(json.data));
-        }
-        catch(error) {
-            dispatch(addPostFailure(error));
-        }
+        let firebase = Firebase.getInstance();
+        firebase.addPost(item)
+            .then((data) => {
+              console.log(data);
+              dispatch(addPostSuccess(data.data));
+            })
+            .catch((error) => {
+              console.log(error);
+              dispatch(addPostFailure(error));
+            });
     };
 };
 
 export const delPost = (item_id) => {
     return dispatch => {
         dispatch(delPostRequest());
-        try {
-            let response = await fetch('')
-            let json = await response.json();
-            dispatch(delPostSuccess(json.data.id));
-        }
-        catch(error) {
-            dispatch(delPostFailure(error));
-        }
+        let firebase = Firebase.getInstance();
+        firebase.delPost(item_id)
+            .then((data) => {
+              console.log(data);
+              dispatch(delPostSuccess(data.data.id));
+            })
+            .catch((error) => {
+              console.log(error);
+              dispatch(delPostFailure(error));
+            });
     };
 };

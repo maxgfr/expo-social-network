@@ -15,59 +15,83 @@ const INITIAL_STATE = {
 
 
 const postReducer = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-      case 'ADD_POST_REQUEST': {
-        return {
-         ...state,
-         isFetching: true
+    switch (action.type) {
+        case 'GET_POST_REQUEST': {
+            return {
+                ...state,
+                isFetching: true
+            }
         }
-      };
-    case 'ADD_POST_FAILURE': {
-      return {
-          ...state,
-          isFetching: false,
-          error: action.payload
-      }
-    };
-  case 'ADD_POST_SUCCESS': {
-    return {
-      byId: [ ...state.byId, action.id],
-      byHash: {
-        ...state.byHash,
-        [action.id]: action.payload
-      },
-      isFetching: false,
-      error: ''
-    }
-},
-      case 'REMOVE_POST_REQUEST': {
-          return {
-           ...state,
-           isFetching: true
-          }
-    },
-    case 'REMOVE_POST_FAILURE': {
-        return {
-            ...state,
-            isFetching: false,
-            error: action.payload
+        case 'GET_POST_FAILURE': {
+            return {
+                ...state,
+                isFetching: false,
+                error: action.payload
+            }
         }
-  },
-  case 'REMOVE_POST_SUCCESS': {
-    const prunedIds = state.byId.filter(item => {
-      return item !== action.id // return all the items not matching the action.id
-    })
-    delete state.byHash[action.id] // delete the hash associated with the action.id
-    return {
-      byId: prunedIds,
-      byHash: state.byHash,
-      isFetching: false,
-      error: ''
+        case 'GET_POST_SUCCESS': {
+            return {
+                byId: [ ...state.byId, action.id],
+                byHash: {
+                    ...state.byHash,
+                    [action.id]: action.payload
+                },
+                isFetching: false,
+                error: ''
+            }
+        }
+        case 'ADD_POST_REQUEST': {
+            return {
+                ...state,
+                isFetching: true
+            }
+        }
+        case 'ADD_POST_FAILURE': {
+            return {
+                ...state,
+                isFetching: false,
+                error: action.payload
+            }
+        }
+        case 'ADD_POST_SUCCESS': {
+            return {
+                byId: [ ...state.byId, action.id],
+                byHash: {
+                    ...state.byHash,
+                    [action.id]: action.payload
+                },
+                isFetching: false,
+                error: ''
+            }
+        }
+        case 'REMOVE_POST_REQUEST': {
+            return {
+                ...state,
+                isFetching: true
+            }
+        }
+        case 'REMOVE_POST_FAILURE': {
+            return {
+                ...state,
+                isFetching: false,
+                error: action.payload
+            }
+        }
+        case 'REMOVE_POST_SUCCESS': {
+            const prunedIds = state.byId.filter(item => {
+                return item !== action.id // return all the items not matching the action.id
+            })
+            delete state.byHash[action.id] // delete the hash associated with the action.id
+            return {
+                byId: prunedIds,
+                byHash: state.byHash,
+                isFetching: false,
+                error: ''
+            }
+        }
+        default:
+        return state;
     }
-  }
-    default:
-      return state;
-  }
 };
 
 
