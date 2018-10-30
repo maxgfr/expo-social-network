@@ -5,10 +5,9 @@ const INITIAL_STATE = {
     byId: [],
     byHash: { },
     error: '',
-    isFetching: false
+    isFetching: false,
+    isReloaded: false
 };
-
-
 
 const postReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -22,7 +21,7 @@ const postReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 isFetching: false,
-                error: action.payload
+                error: action
             }
         }
         case 'GET_POST_SUCCESS': {
@@ -34,6 +33,7 @@ const postReducer = (state = INITIAL_STATE, action) => {
                     ...action.payload
                 },
                 isFetching: false,
+                isReloaded: false,
                 error: ''
             }
             return newState;
@@ -48,7 +48,7 @@ const postReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 isFetching: false,
-                error: action.payload
+                error: action
             }
         }
         case 'ADD_POST_SUCCESS': {
@@ -59,6 +59,7 @@ const postReducer = (state = INITIAL_STATE, action) => {
                     [action.id]: action.payload
                 },
                 isFetching: false,
+                isReloaded: false,
                 error: ''
             }
         }
@@ -72,7 +73,7 @@ const postReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 isFetching: false,
-                error: action.payload
+                error: action
             }
         }
         case 'REMOVE_POST_SUCCESS': {
@@ -84,11 +85,38 @@ const postReducer = (state = INITIAL_STATE, action) => {
                 byId: prunedIds,
                 byHash: state.byHash,
                 isFetching: false,
+                isReloaded: false,
                 error: ''
             }
         }
+        case 'RELOAD_REQUEST': {
+            return {
+                ...state,
+                isReloaded: true
+            }
+        }
+        case 'RELOAD_POST_FAILURE': {
+            return {
+                ...state,
+                isReloaded: false,
+                error: action
+            }
+        }
+        case 'RELOAD_POST_SUCCESS': {
+            console.log('REDUCER - GET_POST_SUCCESS');
+            var newState = {
+                byId: [ ...action.id],
+                byHash: {
+                    ...action.payload
+                },
+                isFetching: false,
+                isReloaded: false,
+                error: ''
+            }
+            return newState;
+        }
         default:
-        return state;
+            return state;
     }
 };
 
