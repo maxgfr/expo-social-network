@@ -5,7 +5,9 @@ import {
   Text,
   ScrollView,
   Button,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator,
+  View
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -13,6 +15,10 @@ import { connect } from 'react-redux';
 import CardComponent from '../components/CardComponent';
 
 import { Icon, Content } from 'native-base'
+
+import { getPost } from '../actions/PostActions';
+
+import { bindActionCreators } from 'redux';
 
 class HomeScreen extends React.Component {
 
@@ -26,16 +32,19 @@ class HomeScreen extends React.Component {
         ),
     });
 
+    componentDidMount() {
+        this.props.getPost();
+    }
+
 
 
 
   render() {
     return (
         <ScrollView style={styles.container}>
-            {this.props.data.byId.map((item, index) => (
-                <CardComponent key={index} id={this.props.data.byHash[item].id} photo={this.props.data.byHash[item].content.photo} thumbnail={this.props.data.byHash[item].content.thumbnail} username={this.props.data.byHash[item].content.username} date={this.props.data.byHash[item].content.date} likes={this.props.data.byHash[item].content.likes} nb_commentaires={this.props.data.byHash[item].content.nb_commentaires} description={this.props.data.byHash[item].content.description} />
+            {this.props.data.isFetching ? <View style={{flex: 1}}> <ActivityIndicator size="large" color="#7D9FDD"/> </View> : this.props.data.byId.map((item, index) => (
+                <CardComponent key={index} id={item} photo={this.props.data.byHash[item].content.photo} thumbnail={this.props.data.byHash[item].content.thumbnail} username={this.props.data.byHash[item].content.username} date={this.props.data.byHash[item].content.date} likes={this.props.data.byHash[item].content.likes} nb_commentaires={this.props.data.byHash[item].content.nb_commentaires} description={this.props.data.byHash[item].content.description} />
             ))}
-
          </ScrollView>
     );
   }
@@ -54,4 +63,10 @@ const mapStateToProps = (state) => {
   return { data }
 };
 
-export default connect(mapStateToProps)(HomeScreen);
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        getPost,
+    }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

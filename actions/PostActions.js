@@ -50,7 +50,8 @@ const getPostRequest = () => (
 const getPostSuccess = posts => (
     {
         type: 'GET_POST_SUCCESS',
-        payload: posts,
+        id: posts.id,
+        payload: posts.payload,
     }
 );
 
@@ -64,6 +65,7 @@ const getPostFailure = error => (
 
 export const getPost = () => {
     return dispatch => {
+        console.log('ACTION GET REQUEST');
         dispatch(getPostRequest());
         let firebase = Firebase.getInstance();
         firebase.getPost()

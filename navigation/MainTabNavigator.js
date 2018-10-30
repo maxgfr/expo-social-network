@@ -4,7 +4,6 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
 import AddScreen from '../screens/AddScreen';
 
 const HomeStack = createStackNavigator({
@@ -26,22 +25,6 @@ HomeStack.navigationOptions = {
   ),
 };
 
-const ProfileStack = createStackNavigator({
-  Profile: ProfileScreen,
-});
-
-ProfileStack.navigationOptions = {
-  tabBarLabel: 'Profile',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? `ios-person` : 'md-person'}
-    />
-  ),
-};
-
-
 export default createBottomTabNavigator({
-  HomeStack,
-  ProfileStack,
+  HomeStack
 });
