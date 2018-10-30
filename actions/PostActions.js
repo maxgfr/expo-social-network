@@ -68,11 +68,13 @@ export const getPost = () => {
         let firebase = Firebase.getInstance();
         firebase.getPost()
             .then((data) => {
-              console.log(data);
-              dispatch(getPostSuccess(data.data));
+                console.log('SUCCESS');
+                console.log(data);
+                dispatch(getPostSuccess(data));
             })
             .catch((error) => {
-              console.log(error);
+                console.log('FAILURE');
+                console.log(error);
               dispatch(getPostFailure(error));
             });
     };
@@ -85,12 +87,14 @@ export const addPost = (item) => {
         let firebase = Firebase.getInstance();
         firebase.addPost(item)
             .then((data) => {
-              console.log(data);
-              dispatch(addPostSuccess(data.data));
+                console.log('SUCCESS');
+                console.log(data);
+                dispatch(addPostSuccess(data));
             })
             .catch((error) => {
-              console.log(error);
-              dispatch(addPostFailure(error));
+                console.log('FAILURE');
+                console.log(error);
+                dispatch(addPostFailure(error));
             });
     };
 };
@@ -101,11 +105,13 @@ export const delPost = (item_id) => {
         let firebase = Firebase.getInstance();
         firebase.delPost(item_id)
             .then((data) => {
-              console.log(data);
-              dispatch(delPostSuccess(data.data.id));
+                console.log('SUCCESS');
+                console.log(data);
+                dispatch(delPostSuccess(data));
             })
             .catch((error) => {
-              console.log(error);
+                console.log('FAILURE');
+                console.log(error);
               dispatch(delPostFailure(error));
             });
     };
