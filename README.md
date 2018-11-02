@@ -12,7 +12,7 @@ Application which lets user to
 
 ```
     git clone https://github.com/maxgfr/expo-social-network.git
-    cd firebase-native
+    cd expo-social-network
     mv .env.example .env  # set your own credentials
     npm install
     expo start
